@@ -153,42 +153,42 @@
             console.error(error);
             alert(error.message);
         }
-    }
-
-    async function deleteProduct() {
-    if (!confirm('Are you sure you want to delete this product?')) {
-        return;
-    }
-    const id = document.getElementById('id').value; 
-    const token = localStorage.getItem('token');
-
-    try {
-        const response = await fetch(`${API_URL}/products`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                id: id
-            })
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.message || 'Failed to delete product.');
-        }else{
-            alert(result.message);
-            window.location.href = '/dashboard';
         }
 
-    } catch (error) {
-        console.error(error);
-        alert(error.message);
-    }
-}  
+        async function deleteProduct() {
+        if (!confirm('Are you sure you want to delete this product?')) {
+            return;
+        }
+        const id = document.getElementById('id').value; 
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch(`${API_URL}/products`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    id: id
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || 'Failed to delete product.');
+            }else{
+                alert(result.message);
+                window.location.href = '/dashboard';
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert(error.message);
+        }
+    }  
 
 
 </script>

@@ -14,7 +14,7 @@ class DeleteProductsRequest extends FormRequest
     {
          return $this->user()?->role === 'admin';
     }
-
+    
     /**
      * Get the validation rules that apply to the request.
      *

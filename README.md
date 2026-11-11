@@ -1,58 +1,120 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Product Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A web-based Product Management System built with Laravel 13, PHP, MySQL, JavaScript, and Bootstrap 5.
 
-## About Laravel
+## 1. Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- User authentication using Laravel Sanctum.
+- Product management (Create, Read, Update, Delete).
+- Product filtering by category and enabled status.
+- Product pagination.
+- Bulk product deletion.
+- Excel export.
+- Role-based authorization for administrative operations.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 2. Technology Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Technology | Purpose |
+|---|---|
+| Laravel 13 | Backend framework |
+| PHP 8.5 | Backend programming language |
+| MySQL | Database |
+| Laravel Sanctum | API authentication |
+| JavaScript | Frontend functionality |
+| Bootstrap 5 | UI styling |
+| Laravel Excel 4.0 | Excel export |
 
-## Learning Laravel
+## 3. Project Setup Instructions
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Requirements
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- PHP 8.5 or compatible version
+- Composer
+- MySQL
+- Node.js and npm (if frontend assets need to be built)
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+### installation steps
 
-## Agentic Development
+1. clone or download from [git hub ](https://github.com/jetjet996/Product-Management-Sytem.git)
+2. php artisan migrate interminal 
+3. php artisan db:seed interminal (to get user data)
+4. php artisan serve 
+5. http://127.0.0.1:8000/login
+    username = user ,password = 12345678
+    username = admin ,password = 12345678
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
 
-```bash
-composer require laravel/boost --dev
+### Authentication 
 
-php artisan boost:install
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/api/login` | User login |
+
+### Categories
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/categories` | Retrieve categories |
+
+### Products
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/products` | Retrieve products |
+| POST | `/api/products` | Create a product |
+| GET | `/api/products/{id}` | Retrieve a specific product |
+| PUT/PATCH | `/api/products/{id}` | Update a product |
+| DELETE | `/api/products/{id}` | Delete a product |
+| DELETE | `/api/products/bulk-delete` | Delete multiple products |
+| GET | `/api/products/export` | Export products to Excel |
+
+### Product Filtering
+
+The product listing endpoint supports query parameters:
+
+```text
+GET /api/products?category_id=1
+GET /api/products?enabled=true
+GET /api/products?page=2
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Parameters can also be combined:
 
-## Contributing
+```text
+GET /api/products?category_id=1&enabled=true&page=2
+```
+### Create Product Example
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**POST** `/api/products`
 
-## Code of Conduct
+```json
+{
+    "category_id": 1,
+    "name": "Gaming Keyboard",
+    "description": "Mechanical RGB keyboard",
+    "price": "159.90",
+    "stock": 15,
+    "enabled": true
+}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Bulk Delete Example
 
-## Security Vulnerabilities
+**DELETE** `/api/products/bulk-delete`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```json
+{
+    "ids": [1, 2, 3]
+}
+```
 
-## License
+## 4. Assumptions and Design Choices
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. **Authentication:** Laravel Sanctum is used to authenticate API requests through Bearer Tokens.
+
+2. **Authorization:** Administrative operations are protected using backend authorization checks. Frontend controls alone are not trusted for access control.
+
+3. **Database:** MySQL is used to store user, category, and product information.
+
+4. **Frontend:** JavaScript Fetch API communicates with the Laravel backend. Bootstrap is used for responsive UI styling.
+
